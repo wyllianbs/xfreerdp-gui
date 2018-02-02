@@ -1,2 +1,2 @@
-# xfreerdpgui
+# xfreerdp-gui
 GUI for xfreerdp
