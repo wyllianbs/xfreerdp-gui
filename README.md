@@ -18,9 +18,10 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
   - Domain (optional).
   - User name.
   - Password.
-  - Select the resolution of your screen.
-  - Select the BPP (Bits per Pixel).
-  - Select the full screen (optional).
-  - Select the show log events (optional).
+  - Select 
+    - the resolution of your screen.
+    - Select the BPP (Bits per Pixel).
+    - Select the full screen (optional).
+    - Select the show log events (optional).
   
 2. Click in `<OK>` to establish the connection.
