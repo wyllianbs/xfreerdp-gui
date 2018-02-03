@@ -13,14 +13,11 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
   - `zenity`
 
 
-# Installation Instructions
-
-- Run the script in console, e.g., `bash xfreerdp-gui.sh` or change the permission (`chmod u+x xfreerdp-gui.sh`) and run by command line `./xfreerdp-gui.sh`.
-
-
 # Usage Instructions
 
-1. Fill the form: 
+1. Run the script in console, e.g., `bash xfreerdp-gui.sh` or change the permission (`chmod u+x xfreerdp-gui.sh`) and run by command line `./xfreerdp-gui.sh`.
+
+2. Fill the form: 
   - Server address or IP address.
   - Port number.
   - Domain (optional).
@@ -34,4 +31,4 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
     - Full screen (optional).
     - Show log events (optional).
   
-2. Click in `<OK>` to establish the connection or press `<Cancel>` to exit.
+3. Click in `<OK>` to establish the connection or press `<Cancel>` to exit.
