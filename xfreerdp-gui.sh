@@ -22,36 +22,37 @@ dim=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 w=$(($(echo $dim | sed -r 's/x.*//')-70))
 h=$(($(echo $dim | sed -r 's/.*x//')-70))
 wxh=$w"x"$h
-
-
-#####################################################################################
-#### Reference: https://googleweblight.com/?lite_url=https://github.com/FreeRDP/FreeRDP/issues/1358&ei=adnCH0AQ&lc=pt-BR&s=1&m=484&host=www.google.com.br&ts=1517584112&sig=AOyes_SEH5-A8FT5VlPQIFialNDEEzt3sw
-
 Blank=""
 
 while true
 do
 
 USERremote=
+PASS=
 DOMAIN=
 SERVER=
 PORT=
 RESOLUTION=
 GEOMETRY=
 BPP=
+NAMEDIR=
+DIR=
 [ -n "$USERremote" ] && until xdotool search "Terminal server login" windowactivate key Right Tab 2>/dev/null ; do sleep 0.05; done &
   FORM=$(yad --center --width=380 \
       --window-icon="gtk-execute" --image="debian-logo" --item-separator=","\
       --title "Terminal server login"\
-      --form --field="Server" "$SERVER""academico.terminal.ufsc.br"\
-      --field="Port" "$PORT""3389"\
-      --field="Domain" "$DOMAIN"\
-      --field="User name" "$USERremote""USER@ufsc.br"\
-      --field="Password ":H\
-      --field="Resolution":CBE "$RESOLUTION" "$wxh,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080,"\
-      --field="BPP":CBE "$BPP""24,16,32,64,128,"\
-      --field="Full Screen":CHK\
-      --field="Show Log":CHK)
+      --form \
+      --field="Server" $SERVER "academico.terminal.ufsc.br" \
+      --field="Port" $PORT "3389" \
+      --field="Domain" $DOMAIN "" \
+      --field="User name" $USERremote "USER@ufsc.br" \
+      --field="Password ":H $PASS "" \
+      --field="Resolution":CBE $RESOLUTION "$wxh,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080," \
+      --field="BPP":CBE $BPP "24,16,32," \
+      --field="Name of Shared Directory" $NAMEDIR "Shared" \
+      --field="Shared Directory" $DIR $HOME/Downloads \
+      --field="Full Screen":CHK $varFull \
+      --field="Show Log":CHK $varLog)
   [ $? != 0 ] && exit
   SERVER=$(echo $FORM | awk -F '|' '{ print $1 }')
   PORT=$(echo $FORM | awk -F '|' '{ print $2 }')
@@ -60,13 +61,15 @@ BPP=
   PASS=$(echo $FORM | awk -F '|' '{ print $5 }')
   RESOLUTION=$(echo $FORM | awk -F '|' '{ print $6 }')
   BPP=$(echo $FORM | awk -F '|' '{ print $7 }')
-  varFull=$(echo $FORM | awk -F '|' '{ print $8 }')
+  NAMEDIR=$(echo $FORM | awk -F '|' '{ print $8 }')
+  DIR=$(echo $FORM | awk -F '|' '{ print $9 }')
+  varFull=$(echo $FORM | awk -F '|' '{ print $10 }')
   if [ "$varFull" = "TRUE" ]; then
       GEOMETRY="/f"
   else
       GEOMETRY=""
   fi
-  varLog=$(echo $FORM | awk -F '|' '{ print $9 }')
+  varLog=$(echo $FORM | awk -F '|' '{ print $11 }')
   
   RES=$(xfreerdp \
                   /v:"$SERVER":$PORT \
@@ -82,13 +85,12 @@ BPP=
                   /vc:rdpsnd,sys:alsa \
                   /dvc:tsmf,sys:alsa \
                   /decorations /window-drag \
-                  /drive:share,$HOME/Downloads \
-                  /compression /drive:$HOME/Downloads \
+                  /drive:$NAMEDIR,$DIR \
+                  /compression /drive:$DIR \
                   /kbd:0x00010416 \
                   +compression +clipboard -menu-anims +fonts 2>&1)
                   
-  echo $RES | grep -q "Authentication failure" && yad --center --image="error" --window-icon="error" --title "Authentication failure" --text="Please make sure you typed\nyour password correctly." --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread \
-  && continue \
+  echo $RES | grep -q "Authentication failure" && yad --center --image="error" --window-icon="error" --title "Authentication failure" --text="Please make sure you typed\nyour password correctly." --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
   echo $RES | grep -q "connection failure" && yad --center --image="error" --window-icon="error" --title "Connection failure" --text="Could not connect to the server.\n\nPlease check your network connection." --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread
   
   if [ "$varLog" = "TRUE" ]; then
