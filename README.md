@@ -29,8 +29,8 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
   - Name of shared directory at the remote desktop.
   - Path of shared directory at the local host.
   - Select: 
-    - Resolution of your screen.
-    - BPP (Bits per Pixel).
+    - Resolution of your screen or fill this field (last item in the list).
+    - BPP (Bits per Pixel) or fill this field (last item in the list).
     - Full screen (optional).
     - Show log events (optional).
   
