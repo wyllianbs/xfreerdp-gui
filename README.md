@@ -10,6 +10,13 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
 - Run the script in console, e.g., `bash xfreerdp-gui.sh` or change the permission (`chmod u+x xfreerdp-gui.sh`) and run by command line `./xfreerdp-gui.sh`.
 
 
+# Requirements/Dependencies
+
+- Linux.
+  - `xfreerdp`.
+  - `yad`.
+
+
 # Usage Instructions
 
 1. Fill the form: 
