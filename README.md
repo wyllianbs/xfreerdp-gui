@@ -12,9 +12,9 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
 
 # Requirements/Dependencies
 
-- Linux.
-  - `xfreerdp`.
-  - `yad`.
+- Linux Packages:
+  - `xfreerdp`
+  - `yad`
 
 
 # Usage Instructions
