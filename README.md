@@ -34,4 +34,4 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
     - Full screen (optional).
     - Show log events (optional).
   
-2. Click in `<OK>` to establish the connection.
+2. Click in `<OK>` to establish the connection or press `<Cancel>` to exit.
