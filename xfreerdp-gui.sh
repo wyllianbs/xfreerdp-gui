@@ -2,18 +2,50 @@
 
 
 #####################################################################################
-#### Dependencies: freerdp-x11 yad
-declare -a array=("freerdp-x11" "yad")
-arraylength=${#array[@]}
-for (( i=1; i<${arraylength}+1; i++ ));
-do
-  PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${array[$i-1]} |grep "install ok installed")
-  echo Checking for ${array[$i-1]}: $PKG_OK
-  if [ "" == "$PKG_OK" ]; then
-    #x-terminal-emulator -e echo "No ${array[$i-1]}. Setting up ${array[$i-1]}." 
-    x-terminal-emulator -e sudo apt-get --force-yes --yes install ${array[$i-1]}
+#### Dependencies: freerdp-x11 yad 
+
+# declare -a array=("freerdp-x11" "yad")
+# arraylength=${#array[@]}
+# for (( i=1; i<${arraylength}+1; i++ ));
+# do
+#   PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${array[$i-1]} |grep "install ok installed")
+#   echo Checking for ${array[$i-1]}: $PKG_OK
+#   if [ "" == "$PKG_OK" ]; then
+#     #x-terminal-emulator -e echo "No ${array[$i-1]}. Setting up ${array[$i-1]}." 
+#     x-terminal-emulator -e sudo apt-get --force-yes --yes install ${array[$i-1]}
+#   fi
+# done
+
+string=""
+if ! hash xfreerdp 2>/dev/null; then
+    string="\rxfreerdp"
+fi
+if ! hash yad 2>/dev/null; then
+    string="${string}\nyad"
+fi
+if [ -n "$string" ]; then
+  if hash amixer 2>/dev/null; then
+    amixer set Master 80% > /dev/null 2>&1; 
+  else
+    pactl set-sink-volume 0 80%
   fi
-done
+  if hash speaker-test 2>/dev/null; then
+    ((speaker-test -t sine -f 880 > /dev/null 2>&1)& pid=$!; sleep 0.2s; kill -9 $pid) > /dev/null 2>&1 
+  else 
+    if hash play 2>/dev/null; then
+      play -n synth 0.1 sin 880 > /dev/null 2>&1 
+    else
+      cat /dev/urandom | tr -dc '0-9' | fold -w 32 | sed 60q | aplay -r 9000 > /dev/null 2>&1
+    fi
+  fi
+  (zenity --info --title="Requirements" --width=300 --text="\
+  You need to install this(ese) package(s):
+
+  <b>$string</b>
+
+  ") > /dev/null 2>&1 
+  exit
+fi
 
 
 #####################################################################################
@@ -22,7 +54,6 @@ dim=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 w=$(($(echo $dim | sed -r 's/x.*//')-70))
 h=$(($(echo $dim | sed -r 's/.*x//')-70))
 wxh=$w"x"$h
-Blank=""
 
 while true
 do
