@@ -10,6 +10,7 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
 - Linux Packages:
   - `xfreerdp`
   - `yad`
+  - `zenity`
 
 
 # Installation Instructions
