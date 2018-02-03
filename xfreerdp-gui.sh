@@ -2,7 +2,7 @@
 
 
 #####################################################################################
-#### Dependencies: freerdp-x11 yad zenity
+#### Dependencies: xfreerdp yad zenity
 
 # declare -a array=("freerdp-x11" "yad")
 # arraylength=${#array[@]}
