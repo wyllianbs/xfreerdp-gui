@@ -26,6 +26,8 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
   - Domain (optional).
   - User name.
   - Password.
+  - Name of shared directory at the remote desktop.
+  - Path of shared directory at the local host.
   - Select: 
     - Resolution of your screen.
     - BPP (Bits per Pixel).
