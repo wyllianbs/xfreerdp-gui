@@ -73,10 +73,10 @@ GEOMETRY=
 BPP=
 NAMEDIR=
 DIR=
-[ -n "$USERremote" ] && until xdotool search "Terminal server login" windowactivate key Right Tab 2>/dev/null ; do sleep 0.05; done &
+[ -n "$USERremote" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.05; done &
   FORM=$(yad --center --width=380 \
       --window-icon="gtk-execute" --image="debian-logo" --item-separator=","\
-      --title "Terminal server login"\
+      --title "xfreerdp-gui"\
       --form \
       --field="Server" $SERVER "academico.terminal.ufsc.br" \
       --field="Port" $PORT "3389" \
