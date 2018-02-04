@@ -67,13 +67,13 @@ do
   BPP=
   NAMEDIR=
   DIR=
-  [ -n "$LOGIN" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.05; done &
+  [ -n "$USER" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.03; done &
     FORMULARY=$(yad --center --width=380 \
         --window-icon="gtk-execute" --image="debian-logo" --item-separator=","                                      \
         --title "xfreerdp-gui"                                                                                      \
         --form                                                                                                      \
         --field="Server" $SERVER "academico.terminal.ufsc.br"                                                       \
-        --field="Port" $PORT "3389"                                                                                 \
+        --field="Port"  $PORT "3389"                                                                                \
         --field="Domain" $DOMAIN ""                                                                                 \
         --field="User name" $LOGIN "USER@ufsc.br"                                                                   \
         --field="Password ":H $PASSWORD ""                                                                          \
