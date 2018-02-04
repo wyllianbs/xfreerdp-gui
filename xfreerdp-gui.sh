@@ -7,11 +7,14 @@
 
 
 #####################################################################################
-#### Dependencies: freerdp-x11 x11-utils yad zenity
+#### Dependencies: freerdp-x11 gawk x11-utils yad zenity
 
 string=""
 if ! hash xfreerdp 2>/dev/null; then
-    string="\rfreerdp-x11"
+    string="\nfreerdp-x11"
+fi
+if ! hash awk 2>/dev/null; then
+    string="\ngawk"
 fi
 if ! hash xdpyinfo 2>/dev/null; then
     string="${string}\nx11-utils"
