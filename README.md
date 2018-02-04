@@ -8,6 +8,7 @@ development by Prof. [Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
 # Requirements/Dependencies
 
 - Linux Packages:
+  - `awk`
   - `freerdp-x11`
   - `x11-utils`
   - `yad`
