@@ -134,4 +134,5 @@ do
         yad --text "$RES" --title "Log of Events" --width=600 --wrap --no-buttons
     fi
     
+    break
 done
