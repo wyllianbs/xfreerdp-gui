@@ -37,8 +37,7 @@ if [ -n "$string" ]; then
       cat /dev/urandom | tr -dc '0-9' | fold -w 32 | sed 60q | aplay -r 9000 > /dev/null 2>&1
     fi
   fi
-  (zenity --info --title="Requirements" --width=300 --text="\
-  You need to install this(ese) package(s):
+  (zenity --info --title="Requirements" --width=300 --text="You need to install this(ese) package(s):
 
   <b>$string</b>
 
@@ -120,14 +119,14 @@ do
                     /kbd:0x00010416           \
                     +compression +clipboard -menu-anims +fonts 2>&1)
                     
-    echo $RES | grep -q "Authentication failure" && \
-    yad --center --image="error" --window-icon="error" --title "Authentication failure" \
-    --text="<b>Could not authenticate to server\!</b>\n\n<i>Please check your password.</i>" \
-    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && \
+    echo $RES | grep -q "Authentication failure" &&                                                  \
+    yad --center --image="error" --window-icon="error" --title "Authentication failure"              \
+    --text="<b>Could not authenticate to server\!</b>\n\n<i>Please check your password.</i>"         \
+    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread &&                       \
     continue 
     
-    echo $RES | grep -q "connection failure" && \
-    yad --center --image="error" --window-icon="error" --title "Connection failure" \
+    echo $RES | grep -q "connection failure" &&                                                      \
+    yad --center --image="error" --window-icon="error" --title "Connection failure"                  \
     --text="<b>Could not connect to the server\!</b>\n\n<i>Please check the network connection.</i>" \
     --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread
     
