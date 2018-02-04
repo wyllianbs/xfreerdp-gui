@@ -49,9 +49,8 @@ fi
 #####################################################################################
 #### Get informations
 dim=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
-w=$(($(echo $dim | sed -r 's/x.*//')-70))
-h=$(($(echo $dim | sed -r 's/.*x//')-70))
-wxh=$w"x"$h
+wxh1=$(($(echo $dim | sed -r 's/x.*//')-70))"x"$(($(echo $dim | sed -r 's/.*x//')-70))
+wxh2=$(echo $dim | sed -r 's/x.*//')"x"$(echo $dim | sed -r 's/.*x//')
 
 while true
 do
@@ -68,19 +67,19 @@ do
   DIR=
   [ -n "$USER" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.03; done &
     FORMULARY=$(yad --center --width=380 \
-        --window-icon="gtk-execute" --image="debian-logo" --item-separator=","                                      \
-        --title "xfreerdp-gui"                                                                                      \
-        --form                                                                                                      \
-        --field="Server" $SERVER "academico.terminal.ufsc.br"                                                       \
-        --field="Port"  $PORT "3389"                                                                                \
-        --field="Domain" $DOMAIN ""                                                                                 \
-        --field="User name" $LOGIN "USER@ufsc.br"                                                                   \
-        --field="Password ":H $PASSWORD ""                                                                          \
-        --field="Resolution":CBE $RESOLUTION "$wxh,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080," \
-        --field="BPP":CBE $BPP "24,16,32,"                                                                          \
-        --field="Name of Shared Directory" $NAMEDIR "Shared"                                                        \
-        --field="Shared Directory" $DIR $HOME/Downloads                                                             \
-        --field="Full Screen":CHK $varFull                                                                          \
+        --window-icon="gtk-execute" --image="debian-logo" --item-separator=","                                              \
+        --title "xfreerdp-gui"                                                                                              \
+        --form                                                                                                              \
+        --field="Server" $SERVER "academico.terminal.ufsc.br"                                                               \
+        --field="Port"  $PORT "3389"                                                                                        \
+        --field="Domain" $DOMAIN ""                                                                                         \
+        --field="User name" $LOGIN "USER@ufsc.br"                                                                           \
+        --field="Password ":H $PASSWORD ""                                                                                  \
+        --field="Resolution":CBE $RESOLUTION "$wxh1,$wxh2,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080,"  \
+        --field="BPP":CBE $BPP "24,16,32,"                                                                                  \
+        --field="Name of Shared Directory" $NAMEDIR "Shared"                                                                \
+        --field="Shared Directory" $DIR $HOME/Downloads                                                                     \
+        --field="Full Screen":CHK $varFull                                                                                  \
         --field="Show Log":CHK $varLog)
     [ $? != 0 ] && exit
     SERVER=$(echo $FORMULARY     | awk -F '|' '{ print $1 }')
@@ -122,13 +121,11 @@ do
     echo $RES | grep -q "Authentication failure" &&                                                  \
     yad --center --image="error" --window-icon="error" --title "Authentication failure"              \
     --text="<b>Could not authenticate to server\!</b>\n\n<i>Please check your password.</i>"         \
-    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread &&                       \
-    continue 
-    
+    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
     echo $RES | grep -q "connection failure" &&                                                      \
     yad --center --image="error" --window-icon="error" --title "Connection failure"                  \
     --text="<b>Could not connect to the server\!</b>\n\n<i>Please check the network connection.</i>" \
-    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread
+    --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue
     
     if [ "$varLog" = "TRUE" ]; then
         yad --text "$RES" --title "Log of Events" --width=600 --wrap --no-buttons
