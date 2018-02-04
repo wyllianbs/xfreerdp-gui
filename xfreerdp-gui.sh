@@ -2,7 +2,7 @@
 
 
 #####################################################################################
-#### Dependencies: xfreerdp yad zenity
+#### Dependencies: freerdp-x11 yad zenity
 
 # declare -a array=("freerdp-x11" "yad")
 # arraylength=${#array[@]}
@@ -18,7 +18,7 @@
 
 string=""
 if ! hash xfreerdp 2>/dev/null; then
-    string="\rxfreerdp"
+    string="\rfreerdp-x11"
 fi
 if ! hash yad 2>/dev/null; then
     string="${string}\nyad"
