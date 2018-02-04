@@ -2,6 +2,11 @@
 
 
 #####################################################################################
+#### FEDERAL UNIVERSITY OF SANTA CATARINA -- UFSC
+#### Prof. Wyllian Bezerra da Silva
+
+
+#####################################################################################
 #### Dependencies: freerdp-x11 yad zenity
 
 # declare -a array=("freerdp-x11" "yad")
@@ -59,7 +64,7 @@ while true
 do
 
 USERremote=
-PASS=
+PASSWORD=
 DOMAIN=
 SERVER=
 PORT=
@@ -77,7 +82,7 @@ DIR=
       --field="Port" $PORT "3389" \
       --field="Domain" $DOMAIN "" \
       --field="User name" $USERremote "USER@ufsc.br" \
-      --field="Password ":H $PASS "" \
+      --field="Password ":H $PASSWORD "" \
       --field="Resolution":CBE $RESOLUTION "$wxh,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080," \
       --field="BPP":CBE $BPP "24,16,32," \
       --field="Name of Shared Directory" $NAMEDIR "Shared" \
@@ -89,7 +94,7 @@ DIR=
   PORT=$(echo $FORM | awk -F '|' '{ print $2 }')
   DOMAIN=$(echo $FORM | awk -F '|' '{ print $3 }')
   USERremote=$(echo $FORM | awk -F '|' '{ print $4 }')
-  PASS=$(echo $FORM | awk -F '|' '{ print $5 }')
+  PASSWORD=$(echo $FORM | awk -F '|' '{ print $5 }')
   RESOLUTION=$(echo $FORM | awk -F '|' '{ print $6 }')
   BPP=$(echo $FORM | awk -F '|' '{ print $7 }')
   NAMEDIR=$(echo $FORM | awk -F '|' '{ print $8 }')
@@ -110,7 +115,7 @@ DIR=
                   /plugin cliprdr \
                   /d:"$DOMAIN" \
                   /u:"$USERremote" \
-                  /p:"$PASS" \
+                  /p:"$PASSWORD" \
                   /bpp:$BPP \
                   /size:$RESOLUTION \
                   /vc:rdpsnd,sys:alsa \
@@ -121,8 +126,8 @@ DIR=
                   /kbd:0x00010416 \
                   +compression +clipboard -menu-anims +fonts 2>&1)
                   
-  echo $RES | grep -q "Authentication failure" && yad --center --image="error" --window-icon="error" --title "Authentication failure" --text="Please make sure you typed\nyour password correctly." --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
-  echo $RES | grep -q "connection failure" && yad --center --image="error" --window-icon="error" --title "Connection failure" --text="Could not connect to the server.\n\nPlease check your network connection." --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread
+  echo $RES | grep -q "Authentication failure" && yad --center --image="error" --window-icon="error" --title "Authentication failure" --text="<b>Could not authenticate to server\!</b>\n\n<i>Please check your password.</i>" --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
+  echo $RES | grep -q "connection failure" && yad --center --image="error" --window-icon="error" --title "Connection failure" --text="<b>Could not connect to the server\!</b>\n\n<i>Please check the network connection.</i>" --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread
   
   if [ "$varLog" = "TRUE" ]; then
       yad --text "$RES" --title "Log of Events" --width=600 --wrap --no-buttons
