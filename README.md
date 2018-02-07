@@ -1,6 +1,6 @@
 # About 
 
-`xfreerdp-gui.sh` is a GUI for ![xfreerdp](<https://github.com/FreeRDP/FreeRDP>) software,
+The front-end `xfreerdp-gui.sh` is a GUI for ![xfreerdp](<https://github.com/FreeRDP/FreeRDP>) software,
 development by Prof. ![Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
 ![Federal University of Santa Catarina (UFSC)](<http://wyllian.prof.ufsc.br/>).
 
