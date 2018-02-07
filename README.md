@@ -1,8 +1,8 @@
 # About 
 
 The front-end `xfreerdp-gui.sh` is a GUI for ![xfreerdp](<https://github.com/FreeRDP/FreeRDP>) software,
-development by Prof. ![Wyllian Bezerra da Silva](mailto:wyllianbs@gmail.com) at
-![Federal University of Santa Catarina (UFSC)](<http://wyllian.prof.ufsc.br/>).
+development by Prof. ![Wyllian Bezerra da Silva](<http://wyllian.prof.ufsc.br>) at
+![Federal University of Santa Catarina (UFSC)](<http://www.ufpr.br>).
 
 
 # Requirements/Dependencies
