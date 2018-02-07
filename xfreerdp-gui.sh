@@ -101,21 +101,20 @@ do
     
     RES=$(xfreerdp                            \
                     /v:"$SERVER":$PORT        \
-                    /cert-ignore              \
+                    /cert-tofu                \
                     /t:"$SERVER"              \
                     /sec-tls $GEOMETRY        \
-                    /plugin cliprdr           \
                     /d:"$DOMAIN"              \
                     /u:"$LOGIN"               \
                     /p:"$PASSWORD"            \
                     /bpp:$BPP                 \
                     /size:$RESOLUTION         \
-                    /vc:rdpsnd,sys:alsa       \
-                    /dvc:tsmf,sys:alsa        \
+                    /sound                    \
+                    /tsmf                     \
+                    /from-stdin               \
                     /decorations /window-drag \
                     /drive:$NAMEDIR,$DIR      \
                     /compression /drive:$DIR  \
-                    /kbd:0x00010416           \
                     +compression +clipboard -menu-anims +fonts 2>&1)
                     
     echo $RES | grep -q "Authentication failure" &&                                                  \
