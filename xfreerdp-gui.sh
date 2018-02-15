@@ -137,6 +137,7 @@
       break
   done
 
+
   #####################################################################################
   #### Reference:
   #### Adapted from: https://github.com/FreeRDP/FreeRDP/issues/1358#issuecomment-175075061
