@@ -66,9 +66,8 @@
     BPP=  
     NAMEDIR=
     DIR=
-    OPTIONS=
-    varCert=
-    varFull=
+    OPTIONS=  
+      varFull=
     varLog=
     [ -n "$USER" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.03; done &
       FORMULARY=$(yad --center --width=380 \
@@ -85,9 +84,9 @@
           --field="Name of Shared Directory" $NAMEDIR "Shared"                                                                \
           --field="Shared Directory" $DIR $HOME/Downloads                                                                     \
           --field="Other Options" $OPTIONS ""                                                                                 \
-          --field="Ignore Certificate":CHK $varCert "true"                                                                    \
           --field="Full Screen":CHK $varFull                                                                                  \
-          --field="Show Log":CHK $varLog)
+          --field="Show Log":CHK $varLog                                                                                      \
+          --button="Cancel":1 --button="Connect":0)
       [ $? != 0 ] && exit
       SERVER=$(echo $FORMULARY     | awk -F '|' '{ print $1 }')
       PORT=$(echo $FORMULARY       | awk -F '|' '{ print $2 }')
@@ -99,24 +98,17 @@
       NAMEDIR=$(echo $FORMULARY    | awk -F '|' '{ print $8 }')
       DIR=$(echo $FORMULARY        | awk -F '|' '{ print $9 }')
       OPTIONS=$(echo $FORMULARY    | awk -F '|' '{ print $10 }')
-      varCert=$(echo $FORMULARY    | awk -F '|' '{ print $11 }')
-      if [ "$varCert" = "TRUE" ]; then
-          CERTIGNORE="/cert-ignore"
-      else
-          CERTIGNORE=""
-      fi
-      varFull=$(echo $FORMULARY    | awk -F '|' '{ print $12 }')
+      varFull=$(echo $FORMULARY    | awk -F '|' '{ print $11 }')
       if [ "$varFull" = "TRUE" ]; then
           GEOMETRY="/f"
       else
           GEOMETRY=""
       fi  
-      varLog=$(echo $FORMULARY | awk -F '|' '{ print $13 }')
+      varLog=$(echo $FORMULARY | awk -F '|' '{ print $12 }')
         
       RES=$(xfreerdp                            \
                       /v:"$SERVER":$PORT        \
-                      /cert-tofu                \
-                      $CERTIGNORE               \
+                      /cert-tofu /cert-ignore   \
                       /t:"$SERVER"              \
                       /sec-tls $GEOMETRY        \
                       /d:"$DOMAIN"              \
@@ -132,11 +124,11 @@
                       /compression /drive:$DIR  \
                       $OPTIONS                  \
                       +compression +clipboard   \
-                      -menu-anims +fonts 2>&1)                 
+                      -menu-anims +fonts 2>&1)    
       echo $RES | grep -q "Authentication failure" &&                                                  \
       yad --center --image="error" --window-icon="error" --title "Authentication failure"              \
       --text="<b>Could not authenticate to server\!</b>\n\n<i>Please check your password.</i>"         \
-      --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
+        --text-align=center --width=320 --button=gtk-ok --buttons-layout=spread && continue 
       echo $RES | grep -q "connection failure" &&                                                      \
       yad --center --image="error" --window-icon="error" --title "Connection failure"                  \
       --text="<b>Could not connect to the server\!</b>\n\n<i>Please check the network connection.</i>" \
