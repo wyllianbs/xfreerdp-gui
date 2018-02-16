@@ -28,7 +28,7 @@ development by [Prof. Wyllian Bezerra da Silva](http://wyllian.prof.ufsc.br/) at
   - Password.
   - Name of shared directory at the remote desktop.
   - Path of shared directory at the local host.
-  - Any other options that you think should be included and supported by ![xfreerdp](https://github.com/FreeRDP/FreeRDP/wiki/manuals).
+  - Any other options that you think should be included and supported by ![xfreerdp](https://github.com/awakecoding/FreeRDP-Manuals/blob/master/User/FreeRDP-User-Manual.markdown).
   - Select: 
     - Resolution of your screen or fill this field (last item in the list).
     - BPP (Bits per Pixel) or fill this field (last item in the list).
