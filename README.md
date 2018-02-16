@@ -32,6 +32,7 @@ development by [Prof. Wyllian Bezerra da Silva](http://wyllian.prof.ufsc.br/) at
   - Select: 
     - Resolution of your screen or fill this field (last item in the list).
     - BPP (Bits per Pixel) or fill this field (last item in the list).
+    - Ignore Certificate (selected by default)
     - Full screen (optional).
     - Show log events (optional).
   
