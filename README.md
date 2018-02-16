@@ -28,7 +28,7 @@ development by [Prof. Wyllian Bezerra da Silva](http://wyllian.prof.ufsc.br/) at
   - Password.
   - Name of shared directory at the remote desktop.
   - Path of shared directory at the local host.
-  - Any other options that you think should be included and supported by ![`xfreerdp`](https://linux.die.net/man/1/xfreerdp).
+  - Any other options that you think should be included and supported by ![xfreerdp](https://linux.die.net/man/1/xfreerdp).
   - Select: 
     - Resolution of your screen or fill this field (last item in the list).
     - BPP (Bits per Pixel) or fill this field (last item in the list).
