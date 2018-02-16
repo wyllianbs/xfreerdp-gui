@@ -36,4 +36,4 @@ development by [Prof. Wyllian Bezerra da Silva](http://wyllian.prof.ufsc.br/) at
     - Full screen (optional).
     - Show log events (optional).
   
-3. Click in `<OK>` to establish the connection or press `<Cancel>` to exit.
+3. Click in `<Connect>` to establish the connection or press `<Cancel>` to exit.
