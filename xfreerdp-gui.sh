@@ -14,7 +14,7 @@
       string="\nfreerdp-x11"
   fi
   if ! hash awk 2>/dev/null; then
-      string="\ngawk"
+      string="\ngawk" 
   fi
   if ! hash xdpyinfo 2>/dev/null; then
       string="${string}\nx11-utils"
@@ -62,10 +62,14 @@
     PORT=
     RESOLUTION=
     GEOMETRY=
-    BPP=
+    CERTIGNORE=
+    BPP=  
     NAMEDIR=
     DIR=
     OPTIONS=
+    varCert=
+    varFull=
+    varLog=
     [ -n "$USER" ] && until xdotool search "xfreerdp-gui" windowactivate key Right Tab 2>/dev/null ; do sleep 0.03; done &
       FORMULARY=$(yad --center --width=380 \
           --window-icon="gtk-execute" --image="debian-logo" --item-separator=","                                              \
@@ -74,37 +78,45 @@
           --field="Server" $SERVER "academico.terminal.ufsc.br"                                                               \
           --field="Port"  $PORT "3389"                                                                                        \
           --field="Domain" $DOMAIN ""                                                                                         \
-          --field="User name" $LOGIN "USER@ufsc.br"                                                                           \
+          --field="Username" $LOGIN "USER@ufsc.br"                                                                            \
           --field="Password ":H $PASSWORD ""                                                                                  \
           --field="Resolution":CBE $RESOLUTION "$wxh1,$wxh2,640x480,720x480,800x600,1024x768,1280x1024,1600x1200,1920x1080,"  \
           --field="BPP":CBE $BPP "24,16,32,"                                                                                  \
           --field="Name of Shared Directory" $NAMEDIR "Shared"                                                                \
           --field="Shared Directory" $DIR $HOME/Downloads                                                                     \
           --field="Other Options" $OPTIONS ""                                                                                 \
+          --field="Ignore Certificate":CHK $varCert "true"                                                                    \
           --field="Full Screen":CHK $varFull                                                                                  \
           --field="Show Log":CHK $varLog)
       [ $? != 0 ] && exit
       SERVER=$(echo $FORMULARY     | awk -F '|' '{ print $1 }')
       PORT=$(echo $FORMULARY       | awk -F '|' '{ print $2 }')
       DOMAIN=$(echo $FORMULARY     | awk -F '|' '{ print $3 }')
-      LOGIN=$(echo $FORMULARY | awk -F '|' '{ print $4 }')
+      LOGIN=$(echo $FORMULARY      | awk -F '|' '{ print $4 }')
       PASSWORD=$(echo $FORMULARY   | awk -F '|' '{ print $5 }')
       RESOLUTION=$(echo $FORMULARY | awk -F '|' '{ print $6 }')
       BPP=$(echo $FORMULARY        | awk -F '|' '{ print $7 }')
       NAMEDIR=$(echo $FORMULARY    | awk -F '|' '{ print $8 }')
       DIR=$(echo $FORMULARY        | awk -F '|' '{ print $9 }')
       OPTIONS=$(echo $FORMULARY    | awk -F '|' '{ print $10 }')
-      varFull=$(echo $FORMULARY    | awk -F '|' '{ print $11 }')
+      varCert=$(echo $FORMULARY    | awk -F '|' '{ print $11 }')
+      if [ "$varCert" = "TRUE" ]; then
+          CERTIGNORE="/cert-ignore"
+      else
+          CERTIGNORE=""
+      fi
+      varFull=$(echo $FORMULARY    | awk -F '|' '{ print $12 }')
       if [ "$varFull" = "TRUE" ]; then
           GEOMETRY="/f"
       else
           GEOMETRY=""
-      fi
-      varLog=$(echo $FORMULARY | awk -F '|' '{ print $12 }')
-      
+      fi  
+      varLog=$(echo $FORMULARY | awk -F '|' '{ print $13 }')
+        
       RES=$(xfreerdp                            \
                       /v:"$SERVER":$PORT        \
                       /cert-tofu                \
+                      $CERTIGNORE               \
                       /t:"$SERVER"              \
                       /sec-tls $GEOMETRY        \
                       /d:"$DOMAIN"              \
