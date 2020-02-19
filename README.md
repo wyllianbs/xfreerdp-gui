@@ -1,4 +1,3 @@
-
 # About 
 
 The front-end `xfreerdp-gui.sh` is a GUI for ![xfreerdp](https://github.com/FreeRDP/FreeRDP) software,
